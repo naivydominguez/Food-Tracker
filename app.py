@@ -24,21 +24,20 @@ CALORIES:
 - Serving size: [estimated serving size]
 - Breakdown (if multiple items): [item: X cal, item: X cal, ...]
 
-RECIPES USING THIS FOOD:
-1. [Recipe Name]
-   - Brief description (1-2 sentences)
-   - Key ingredients: [list]
-   - Cook time: [X mins]
+NUTRITION:
+- Protein: [X]g
+- Carbs: [X]g
+- Fat: [X]g
+- Fiber: [X]g
+- Sodium: [X]mg
 
-2. [Recipe Name]
-   - Brief description (1-2 sentences)
-   - Key ingredients: [list]
-   - Cook time: [X mins]
+HEALTH INSIGHTS:
+[2-3 sentences about this meal — is it high in sodium, good for muscle recovery, heavy on saturated fat, etc.]
 
-3. [Recipe Name]
-   - Brief description (1-2 sentences)
-   - Key ingredients: [list]
-   - Cook time: [X mins]"""
+HEALTHIER SWAPS:
+- [Swap 1 with estimated calorie savings]
+- [Swap 2 with estimated calorie savings]
+- [Swap 3 with estimated calorie savings]"""
 
 
 def analyze_image(image_path):
@@ -88,6 +87,12 @@ def get_today_log():
             if row['timestamp'].startswith(today):
                 entries.append(row)
     return entries
+
+@app.route('/clear', methods=['POST'])
+def clear_log():
+    if os.path.exists(LOG_FILE):
+        os.remove(LOG_FILE)
+    return redirect(url_for('index'))
 
 
 @app.route('/')

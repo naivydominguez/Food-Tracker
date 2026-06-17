@@ -47,6 +47,11 @@
   <div class="card">
   <h2>Today's Log</h2>
 
+  <form method="post" action="/clear">
+    <button type="submit">Clear Food</button> 
+  </form>
+
+
   {% set pct = total * 100 // goal %}
   {% if pct > 100 %}{% set pct = 100 %}{% endif %}
 
