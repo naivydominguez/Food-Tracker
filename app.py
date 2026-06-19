@@ -112,21 +112,32 @@ def delete_meal():
     return redirect(url_for("index"))
 
 
-@app.route('/login', methods=['POSt'])
+
+## simple login method. No password needed unless we deploy. 
+@app.route('/login', methods=['POST'])
 def login():
-    username = request.form['username'].strip().lower()
+    username = request.form['username'].strip().lower() 
     session['user'] = username
 
+    logged_file = f'logs/{username}.csv'
+
+    if not os.path.exists(logged_file): # even if a user doesnt exist (meaning the file is not stored in the 'logs' folder) we will create one
+        with open(logged_file, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(['timestamp', 'food', 'calories', 'protein', 'carbs', 'fat', 'fiber']) # what the csv file stores for each person
+    return redirect(url_for('index')) # once user is logged in, we redirect them to the main page
 
 
-
-
-
-
+## login page display
+@app.route('/login')
+def login_page():
+    return render_template('login.html')
 
 
 @app.route('/')
 def index():
+    if 'user' not in session:
+        return redirect(url_for('login_page'))  # redirects user to log in if they dont exist yet in file
     entries = get_today_log()
     total = sum(int(e['calories']) for e in entries)
     return render_template('index.html', entries=entries, total=total, goal=DAILY_GOAL)
