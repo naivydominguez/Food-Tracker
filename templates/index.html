@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Food Calorie Tracker</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-<div class="container">
+{% extends "base.html" %}
+
+{% block content %}
+
   <h1>Food Calorie Tracker</h1>
 
   {% for msg in get_flashed_messages() %}
@@ -171,5 +165,5 @@ function createFileList(file) {
   return dataTransfer.files;
 }
 </script>
-</body>
-</html>
+
+{% endblock %}

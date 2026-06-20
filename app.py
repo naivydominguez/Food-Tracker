@@ -142,6 +142,18 @@ def index():
     total = sum(int(e['calories']) for e in entries)
     return render_template('index.html', entries=entries, total=total, goal=DAILY_GOAL)
 
+## connecting the different tabs
+@app.route('/calendar')
+def calendar():
+    return render_template('calendar.html')
+
+@app.route('/history')
+def history():
+    return render_template('history.html')
+
+@app.route('/stats')
+def stats():
+    return render_template('stats.html')
 
 @app.route('/scan', methods=['POST'])
 def scan():
